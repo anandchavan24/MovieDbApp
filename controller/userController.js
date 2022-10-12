@@ -40,6 +40,21 @@ exports.getAllUser = (req,res)=>{
     })
 }
 
+exports.getAllMovie = (req,res)=>{
+    userService.getAllMovie((err,data)=>{
+        if(err){
+            res.status(500).send({
+                message : err
+            });
+        }else{
+            res.status(200).send({
+                message : 'success',
+                data : data
+            });
+        }  
+    })
+}
+
 // exports.login = (req,res)=>{
 //     //Validate req
 //     if(!req.body.email){

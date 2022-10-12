@@ -46,6 +46,18 @@ exports.getAllUser = (response) => {
 
 }
 
+exports.getAllMovie = (response) => {
+    User.getAllMovie((err, data)=>{
+        if(err){
+            response(err,null);
+        }else{
+            response(null,data);
+        }
+        
+    })
+
+}
+
 exports.login = ({email,password},response) => {
     const encryptedPassword = util.encrypt(password)
     User.login({email,password:encryptedPassword},(err, data)=>{

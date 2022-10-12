@@ -15,6 +15,9 @@ module.exports = (app) => {
     //search api
     router.post('/search', jwt.verifyToken, userController.search)
 
+    //get all movie in database
+    router.get('/getAllMovie', jwt.verifyToken, userController.getAllMovie)
+
     //main route
     app.use('/user/', router)
 }

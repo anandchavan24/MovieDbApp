@@ -109,7 +109,20 @@ User.getAllUser = (respone) => {
 
     user.find((err, result) => {
         if (err) {
-            sql.end()
+            respone(err, null);
+            return
+        }
+        console.log("All user: ", result)
+        respone(null, result)
+    })
+    //return
+}
+
+User.getAllMovie = (respone) => {
+    //create queary
+
+    movie.find((err, result) => {
+        if (err) {
             respone(err, null);
             return
         }
