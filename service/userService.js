@@ -135,9 +135,18 @@ exports.search = (movieName,response) => {
             response(err,null);
         }else{
             response(null,data);
-        }
-        
+        }    
     })
 
+}
+
+exports.getMovieById = (movieId,response) =>{
+    User.getMovieById(movieId,(err, data)=>{
+        if(err){
+            response(err,null);
+        }else{
+            response(null,data);
+        }
+    })
 }
 

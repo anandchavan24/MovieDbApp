@@ -178,3 +178,27 @@ exports.search = (req,res)=>{
         }  
     })
 }
+
+
+exports.getMovieById = (req,res)=>{
+    //Validate req
+    if(!req.body.movieId){
+        res.status(404).send({
+            message : 'movie id  is required'
+        })
+        return;
+    }
+
+    userService.getMovieById(req.body.movieId,(err,data)=>{
+        if(err){
+            res.status(500).send({
+                message : err
+            });
+        }else{
+            res.status(200).send({
+                message : 'success',
+                data : data
+            });
+        }  
+    })
+}

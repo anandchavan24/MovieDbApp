@@ -18,6 +18,9 @@ module.exports = (app) => {
     //get all movie in database
     router.get('/getAllMovie', jwt.verifyToken, userController.getAllMovie)
 
+    //get movie by id
+    router.post('/getMovieById', jwt.verifyToken, userController.getMovieById)
+
     //main route
     app.use('/user/', router)
 }

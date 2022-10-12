@@ -73,7 +73,7 @@ User.loginByMongo = ({ email, password }, respone) => {
 User.search = async (movieName, respone) => {
     const result = await movie.findOne({ "Title":  new RegExp(["^", movieName, "$"].join(""), "i")})
     if (result == null) {
-        const res = await getUser(movieName)
+        const res = await getMovieByName(movieName)
         if (res.statusCode == 200 && JSON.parse((res.response.Response).toLowerCase())) {
             const Movie = new movie(res.response);
             Movie.save((function (result, err) {
@@ -92,7 +92,7 @@ User.search = async (movieName, respone) => {
 }
 
 
-async function getUser(movieName) {
+async function getMovieByName(movieName) {
     try {
         const url = 'http://www.omdbapi.com/?apikey=f34f1e9e&t=' + movieName;
         console.log(url);
@@ -130,6 +130,37 @@ User.getAllMovie = (respone) => {
         respone(null, result)
     })
     //return
+}
+
+User.getMovieById = async (movieId,respone) =>{
+    const result = await movie.findOne({ "imdbID": movieId})
+    if (result == null) {
+        const res = await getMovieById(movieId)
+        if (res.statusCode == 200 && JSON.parse((res.response.Response).toLowerCase())) {
+            const Movie = new movie(res.response);
+            Movie.save((function (result, err) {
+                if (err) {
+                    console.log("fail",err);     
+                }
+                console.log("success",result);     
+            }))
+        }
+        respone(null, (res.statusCode == 200) ? res.response : res.error)
+    }
+    else {
+        console.log("result", result)
+        respone(null, result)
+    }
+}
+
+async function getMovieById(movieId) {
+    try {
+        const url = 'http://www.omdbapi.com/?apikey=f34f1e9e&i=' + movieId;
+        const response = await axios.get(url);
+        return { statusCode: response.status, response: response.data }
+    } catch (error) {
+        return { statusCode: response.status, response: error }
+    }
 }
 
 module.exports = User;
