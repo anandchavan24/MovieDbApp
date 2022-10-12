@@ -15,58 +15,6 @@ const User = function (user) {
     this.password = user.password
 }
 
-//CURD
-User.create = (newUSer, respone) => {
-    //create queary
-    console.log('new user - :', newUSer)
-    let insertQuery = 'INSERT INTO user (id, firstname, lastname,moblie,email,city,country,is_delete,created_at,password) VALUES (?,?,?,?,?,?,?,?,?,?);'
-    let { id, firstname, lastname, mobile, email, city, country, is_delete, created_at, password } = newUSer
-    sql.query(insertQuery, [id, firstname, lastname, mobile, email, city, country, is_delete, created_at, password], (err, result) => {
-        if (err) {
-            sql.end()
-            respone(err, null);
-            return
-        }
-        console.log("Created user: ", { id: result.insertId, ...newUSer })
-        respone(null, { id: result.insertId, ...newUSer })
-    })
-    //return
-}
-
-User.getAllUser = (respone) => {
-    //create queary
-
-    sql.query('SELECT * from user', (err, result) => {
-        if (err) {
-            sql.end()
-            respone(err, null);
-            return
-        }
-        console.log("Created user: ", result)
-        respone(null, result)
-    })
-    //return
-}
-
-User.login = ({ email, password }, respone) => {
-    //create queary
-    console.log(email, password);
-    sql.query('SELECT * from user where email = ? and password = ?', [email, password], (err, result) => {
-        if (err) {
-            sql.end()
-            respone(err, null);
-            return
-        }
-        if (result && result.length) {
-            console.log("login succesfull: ", result)
-            respone(null, result)
-        } else {
-            respone('email or password does not match.', null)
-        }
-
-    })
-    //return
-}
 
 User.signUp = async (newUSer, respone) => {
     let { id, firstname, lastname, mobile, email, city, country, is_delete, created_at, password } = newUSer
@@ -153,6 +101,22 @@ async function getUser(movieName) {
     } catch (error) {
         return { statusCode: response.status, response: error }
     }
+}
+
+
+User.getAllUser = (respone) => {
+    //create queary
+
+    user.find((err, result) => {
+        if (err) {
+            sql.end()
+            respone(err, null);
+            return
+        }
+        console.log("All user: ", result)
+        respone(null, result)
+    })
+    //return
 }
 
 module.exports = User;

@@ -3,20 +3,17 @@ module.exports = (app) => {
     let userController = require('./controller/userController')
     let jwt = require('./jwtAuth');
 
-    //create user
-    router.post('/', userController.createUser)
-
-    //get all users
-    router.get('/', jwt.verifyToken, userController.getAllUser)
-
     //login api
     router.post('/login', userController.loginByMongo)
 
     //sign up api
     router.post('/signup', userController.signUp)
 
+    //get all users
+    router.get('/getAllUser', jwt.verifyToken, userController.getAllUser)
+
     //search api
-    router.post('/search', jwt.verifyToken,userController.search)
+    router.post('/search', jwt.verifyToken, userController.search)
 
     //main route
     app.use('/user/', router)
