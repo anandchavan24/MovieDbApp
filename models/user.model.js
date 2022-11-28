@@ -70,4 +70,15 @@ User.getAllUser = (respone) => {
 }
 
 
+User.getAllUser = (respone) => {
+    user.find((err, result) => {
+        if (err) {
+            respone(err, null);
+            return
+        }
+        respone(null, result)
+    })
+}
+
+
 module.exports = User;

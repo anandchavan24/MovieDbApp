@@ -15,7 +15,7 @@ exports.getAllMovie = async (response) => {
 exports.search = async (movieName, response) => {
     const result = await Movie.findOne({ "Title": new RegExp(["^", movieName, "$"].join(""), "i") });
     if (result == null) {
-        const res = await Movie.getMovieDetails(movieName)
+        const res = await Function.getMovieDetails(movieName)
         if (res && res.statusCode == 200 && JSON.parse((JSON.parse(JSON.stringify(res.response)).Response).toLowerCase())) {
             const Movie = new movie(res.response);
             Movie.save()
