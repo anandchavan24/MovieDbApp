@@ -16,6 +16,7 @@ exports.getAllMovie = (req, res) => {
 }
 
 exports.search = (req, res) => {
+    console.log(req.body)
     if (!req.body.movieName) {
         res.status(404).send({
             message: 'movie name is required'
@@ -25,12 +26,15 @@ exports.search = (req, res) => {
     movieService.search(req.body.movieName, (err, data) => {
         if (err) {
             res.status(500).send({
-                message: err
+                message: err,
+                statusCode:500,
+                data:null
             });
         } else {
             res.status(200).send({
                 message: 'success',
-                data: data
+                data: data,
+                statusCode:200
             });
         }
     })
